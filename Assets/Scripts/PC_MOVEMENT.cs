@@ -18,6 +18,8 @@ public class PC_MOVEMENT : MonoBehaviour
 
     int m_totalScore;
 
+    public bool m_hasItems;
+
     // Start is called before the first frame update
     void Start()
     {
