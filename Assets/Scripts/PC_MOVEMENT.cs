@@ -13,8 +13,10 @@ public class PC_MOVEMENT : MonoBehaviour
     [SerializeField] GameObject m_itemPrompt;
     [SerializeField] GameObject m_toiletPrompt;
     List<GP_EVIDENCE> m_heldItems = new List<GP_EVIDENCE>();
-    [SerializeField] LayerMask itemLayer;
-    [SerializeField] LayerMask toiletLayer;
+    [SerializeField] LayerMask m_itemLayer;
+    [SerializeField] LayerMask m_toiletLayer;
+
+    int m_totalScore;
 
     // Start is called before the first frame update
     void Start()
@@ -51,7 +53,7 @@ public class PC_MOVEMENT : MonoBehaviour
     {
         //scan for items in capsule (pretend cylinder)
         //add to array
-        Collider[] itemsInRange = Physics.OverlapCapsule(transform.position, transform.position, checkRadius, itemLayer);
+        Collider[] itemsInRange = Physics.OverlapCapsule(transform.position, transform.position, checkRadius, m_itemLayer);
         //if array != 0, show pickup input as a UI element
         if (itemsInRange.Length != 0)
         {
@@ -78,12 +80,7 @@ public class PC_MOVEMENT : MonoBehaviour
                 if (item != null)
                 {
                     m_heldItems.Add(item); // Add item to m_heldItems
-                    item.gameObject.SetActive(false); // Make invisible
-
-                    // Hold item in front of player:
-                    //item.transform.SetParent(transform, false); // Parent the item to the player
-                    //item.transform.localPosition = new Vector3(0, 0, -1); // Move the item in front of the player
-
+                    item.gameObject.SetActive(false); // Make item inactive (can't be seen, collided with or picked up again)
                     Debug.Log("Item picked up");
                 }
             }
@@ -97,16 +94,14 @@ public class PC_MOVEMENT : MonoBehaviour
     void DumpItems()
     {
         //If at toilet (trigger box?) & holding items, show space key (greyed if 0 items)
-        if (Physics.CheckCapsule(transform.position, transform.position, checkRadius, toiletLayer) && m_heldItems.Count != 0)
+        if (Physics.CheckCapsule(transform.position, transform.position, checkRadius, m_toiletLayer) && m_heldItems.Count != 0)
         {
             m_toiletPrompt.SetActive(true);
 
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                // Make item invisible:
-                //m_heldItems[0].gameObject.SetActive(false); // BREAKS THINGS SOMETIMES?
-
-                m_heldItems[0].m_includeInScore = true;
+                m_totalScore += m_heldItems[0].score;
+                Debug.Log(m_heldItems.Count);
                 m_heldItems.RemoveAt(0);
                 Debug.Log("Item dumped");
                 // Play dump sound effect/ animation

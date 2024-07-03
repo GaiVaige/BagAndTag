@@ -497,8 +497,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_evidenceID: 1
-  score: 0
-  m_includeInScore: 0
+  score: 5
 --- !u!135 &1072768278
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -723,8 +722,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_evidenceID: 2
-  score: 0
-  m_includeInScore: 0
+  score: 10
 --- !u!135 &1360501258
 SphereCollider:
   m_ObjectHideFlags: 0
