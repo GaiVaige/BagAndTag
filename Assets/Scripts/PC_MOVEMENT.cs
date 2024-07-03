@@ -70,34 +70,44 @@ public class PC_MOVEMENT : MonoBehaviour
         //if array != 0, show pickup input as a UI element
         if (itemsInRange.Length != 0)
         {
-            m_itemPrompt.SetActive(true);
-
-            if (Input.GetKeyDown(KeyCode.E))
+            float shortestDist = 0;
+            int closestItem = 0;
+            for (int i = 0; i < itemsInRange.Length; i++)
             {
-                //iterate over the colliders returned above, and grab the closest
-                float shortestDist = 0;
-                int closestItem = 0;
-                for (int i = 0; i < itemsInRange.Length; i++)
+                float itemDist = Vector3.Distance(transform.position, itemsInRange[i].transform.position);
+                if (shortestDist > itemDist)
                 {
-                    float itemDist = Vector3.Distance(transform.position, itemsInRange[i].transform.position);
-                    if (shortestDist > itemDist)
-                    {
-                        shortestDist = itemDist;
-                        closestItem = i;
-                    }
-                }
-                //add to the pile you carry in front of you
-                //add to a List<Evidence>
-                //Evidence has a name and score saved in a tuple
-                GP_EVIDENCE item = itemsInRange[closestItem].GetComponent<GP_EVIDENCE>();
-                if (item != null)
-                {
-                    m_heldItems.Add(item); // Add item to m_heldItems
-                    item.gameObject.SetActive(false); // Make item inactive (can't be seen, collided with or picked up again)
-
-                    m_itemsCollected++;
+                    shortestDist = itemDist;
+                    closestItem = i;
                 }
             }
+            if(Physics.Linecast(transform.position, itemsInRange[closestItem].transform.position, LayerMask.GetMask("Default")))
+            {
+                m_itemPrompt.SetActive(false);
+                return;
+            }
+            else
+            {
+
+                m_itemPrompt.SetActive(true);
+                if (Input.GetKeyDown(KeyCode.E))
+                {
+                    //iterate over the colliders returned above, and grab the closest
+
+                    //add to the pile you carry in front of you
+                    //add to a List<Evidence>
+                    //Evidence has a name and score saved in a tuple
+                    GP_EVIDENCE item = itemsInRange[closestItem].GetComponent<GP_EVIDENCE>();
+                    if (item != null)
+                    {
+                        m_heldItems.Add(item); // Add item to m_heldItems
+                        item.gameObject.SetActive(false); // Make item inactive (can't be seen, collided with or picked up again)
+
+                        m_itemsCollected++;
+                    }
+                }
+            }
+            
         }
         else
         {
@@ -107,25 +117,34 @@ public class PC_MOVEMENT : MonoBehaviour
 
     void DumpItems()
     {
-        //If at toilet (trigger box?) & holding items, show space key (greyed if 0 items)
-        if (Physics.CheckCapsule(transform.position, transform.position, checkRadius, toiletLayer) && m_heldItems.Count != 0)
+        Collider[] collidersFound = Physics.OverlapSphere(transform.position, checkRadius, toiletLayer);
+        if (collidersFound.Length != 0 && m_heldItems.Count != 0)
         {
-            m_toiletPrompt.SetActive(true);
-
-            if (Input.GetKeyDown(KeyCode.Space))
+            if(Physics.Linecast(transform.position, collidersFound[0].transform.position, LayerMask.GetMask("Default")))
             {
-                m_totalScore += m_heldItems[0].score;
-                if (m_heldItems.Count == 1)
-                {
-                    m_heldItems.Clear();
-                }
-                else if (m_heldItems.Count > 1)
-                {
-                    m_heldItems.RemoveAt(0);
-                }
-
-                // Play dump sound effect/ animation
+                return;
             }
+            else
+            {
+                m_toiletPrompt.SetActive(true);
+
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    m_totalScore += m_heldItems[0].score;
+                    if (m_heldItems.Count == 1)
+                    {
+                        m_heldItems.Clear();
+                    }
+                    else if (m_heldItems.Count > 1)
+                    {
+                        m_heldItems.RemoveAt(0);
+                    }
+
+                    // Play dump sound effect/ animation
+                }
+            }
+
+            
         }
         else
         {
