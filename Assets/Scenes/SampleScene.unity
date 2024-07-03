@@ -269,6 +269,11 @@ MonoBehaviour:
   m_resetTime: 10
   m_pointCheckRadius: 4
   m_stopDist: 2
+  m_timer: 0
+  m_lookDegrees: 30
+  m_checkRadius: 10
+  m_lookResolution: 165
+  m_drawVisibilityGizmos: 1
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -883,6 +888,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 2823026221030115424, guid: 3f8e7c1be81feeb4b86cc1b227f88404,
+        type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 7324985561636345583, guid: 3f8e7c1be81feeb4b86cc1b227f88404,
+        type: 3}
+      propertyPath: m_hasItems
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

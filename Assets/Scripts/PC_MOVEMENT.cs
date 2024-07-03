@@ -13,6 +13,7 @@ public class PC_MOVEMENT : MonoBehaviour
     [SerializeField] GameObject m_itemPrompt;
     List<GP_EVIDENCE> m_heldItems = new List<GP_EVIDENCE>();
     [SerializeField] LayerMask itemLayer;
+    public bool m_hasItems;
 
     // Start is called before the first frame update
     void Start()
@@ -24,6 +25,10 @@ public class PC_MOVEMENT : MonoBehaviour
     void Update()
     {
         m_cc.Move(CalculateMovementDirection() * Time.deltaTime);
+        if(m_heldItems.Count != 0)
+        {
+            m_hasItems = true;
+        }
         //CheckForItems();
         //DumpItems();
     }
