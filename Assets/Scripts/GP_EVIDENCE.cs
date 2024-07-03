@@ -8,7 +8,7 @@ public class GP_EVIDENCE : MonoBehaviour
 {
     public uint m_evidenceID;
     [SerializeField] public int score;
-
+    public string m_text;
 
 }
 

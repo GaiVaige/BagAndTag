@@ -10,9 +10,10 @@ public class Gamemanager : MonoBehaviour
 
     [HideInInspector]public static Gamemanager g_instance;
     [SerializeField] TextMeshProUGUI m_text;
-
+    PC_MOVEMENT m_pc;
     [SerializeField] float m_maxTime;
     float m_currentTime;
+    int m_finalScore;
 
     // Start is called before the first frame update
     void Start()
@@ -28,6 +29,7 @@ public class Gamemanager : MonoBehaviour
             g_instance = this;
             DontDestroyOnLoad(this);
         }
+        m_pc = FindObjectOfType<PC_MOVEMENT>();
     }
 
     // Update is called once per frame
@@ -42,5 +44,6 @@ public class Gamemanager : MonoBehaviour
         int seconds = Mathf.FloorToInt(m_currentTime % 60);
         m_text.text = string.Format("{0}:{1:00}", minutes, seconds);
         m_currentTime -= Time.deltaTime;
+        m_finalScore = m_pc.m_totalScore;
     }
 }

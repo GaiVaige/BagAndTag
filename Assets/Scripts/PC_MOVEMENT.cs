@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterController))]
@@ -12,11 +13,12 @@ public class PC_MOVEMENT : MonoBehaviour
     [SerializeField] float checkRadius;
     [SerializeField] GameObject m_itemPrompt;
     [SerializeField] GameObject m_toiletPrompt;
+    [SerializeField] TextMeshPro m_text;
     [SerializeField] List<GP_EVIDENCE> m_heldItems = new List<GP_EVIDENCE>();
     [SerializeField] LayerMask itemLayer;
     [SerializeField] LayerMask toiletLayer;
 
-    int m_totalScore;
+    [HideInInspector] public int m_totalScore;
     [HideInInspector] public int m_itemsCollected = 0;
 
     public bool m_hasItems;
@@ -26,6 +28,7 @@ public class PC_MOVEMENT : MonoBehaviour
     void Start()
     {
         m_cc = GetComponent<CharacterController>();
+        m_text.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -100,10 +103,16 @@ public class PC_MOVEMENT : MonoBehaviour
                     GP_EVIDENCE item = itemsInRange[closestItem].GetComponent<GP_EVIDENCE>();
                     if (item != null)
                     {
+                        StopAllCoroutines();
+                        m_text.text = "";
                         m_heldItems.Add(item); // Add item to m_heldItems
                         item.gameObject.SetActive(false); // Make item inactive (can't be seen, collided with or picked up again)
 
                         m_itemsCollected++;
+
+                        m_text.gameObject.SetActive(true);
+                        m_text.text = item.m_text;
+                        StartCoroutine(TextTimer());
                     }
                 }
             }
@@ -130,6 +139,7 @@ public class PC_MOVEMENT : MonoBehaviour
 
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
+
                     m_totalScore += m_heldItems[0].score;
                     if (m_heldItems.Count == 1)
                     {
@@ -150,5 +160,12 @@ public class PC_MOVEMENT : MonoBehaviour
         {
             m_toiletPrompt.SetActive(false);
         }
+    }
+
+    IEnumerator TextTimer()
+    {
+
+        yield return new WaitForSeconds(5.0f);
+        m_text.gameObject.SetActive(false);
     }
 }
