@@ -24,8 +24,8 @@ public class PC_MOVEMENT : MonoBehaviour
     void Update()
     {
         m_cc.Move(CalculateMovementDirection() * Time.deltaTime);
-        CheckForItems();
-        DumpItems();
+        //CheckForItems();
+        //DumpItems();
     }
 
     Vector3 CalculateMovementDirection()
