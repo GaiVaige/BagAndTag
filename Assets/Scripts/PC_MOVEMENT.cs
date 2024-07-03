@@ -13,8 +13,8 @@ public class PC_MOVEMENT : MonoBehaviour
     [SerializeField] GameObject m_itemPrompt;
     [SerializeField] GameObject m_toiletPrompt;
     List<GP_EVIDENCE> m_heldItems = new List<GP_EVIDENCE>();
-    [SerializeField] LayerMask m_itemLayer;
-    [SerializeField] LayerMask m_toiletLayer;
+    [SerializeField] LayerMask itemLayer;
+    [SerializeField] LayerMask toiletLayer;
 
     int m_totalScore;
 
