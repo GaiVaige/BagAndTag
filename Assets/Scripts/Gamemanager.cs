@@ -1,4 +1,5 @@
 using JetBrains.Annotations;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -16,8 +17,7 @@ public class Gamemanager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
-        m_maxTime = m_currentTime;
+        m_currentTime = m_maxTime;
         g_instance = FindObjectOfType<Gamemanager>() ;
         if(g_instance != this && g_instance != null)
         {
@@ -38,7 +38,9 @@ public class Gamemanager : MonoBehaviour
             m_currentTime = 0;
             //end game
         }
+        int minutes = Mathf.FloorToInt(m_currentTime / 60);
+        int seconds = Mathf.FloorToInt(m_currentTime % 60);
+        m_text.text = string.Format("{0}:{1:00}", minutes, seconds);
         m_currentTime -= Time.deltaTime;
-        m_text.text = m_currentTime.ToString();
     }
 }
