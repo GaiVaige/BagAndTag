@@ -101,8 +101,14 @@ public class PC_MOVEMENT : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 m_totalScore += m_heldItems[0].score;
-                Debug.Log(m_heldItems.Count);
-                m_heldItems.RemoveAt(0);
+                if (m_heldItems.Count == 1)
+                {
+                    m_heldItems.Clear();
+                }
+                else if (m_heldItems.Count > 1)
+                {
+                    m_heldItems.RemoveAt(0);
+                }
                 Debug.Log("Item dumped");
                 // Play dump sound effect/ animation
             }
