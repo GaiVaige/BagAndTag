@@ -566,7 +566,7 @@ Transform:
   m_GameObject: {fileID: 169397763}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 6.86, y: -4.854, z: 24.57}
+  m_LocalPosition: {x: 6.86, y: -4.854, z: 23.887}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -758,8 +758,8 @@ Transform:
   m_GameObject: {fileID: 285674151}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 7.21, y: -4.73, z: 7.3666477}
-  m_LocalScale: {x: 3.8903, y: 3.8903, z: 3.8903}
+  m_LocalPosition: {x: 7.21, y: -4.03, z: 7.3666477}
+  m_LocalScale: {x: 1.2426007, y: 1.2426007, z: 1.2426007}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1649167164}
@@ -2137,8 +2137,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.02, y: 0.020000001, z: 0.3}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 0.02, y: 0.020000005, z: 0.17501482}
+  m_Center: {x: 0.00000014050616, y: -0.00000046725643, z: -0.062493067}
 --- !u!4 &857339525 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 905fa4d50caa6484491e605bd6b6cd65,
@@ -2593,8 +2593,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.020000001, y: 0.02, z: 0.3}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 0.020000001, y: 0.02, z: 0.18794088}
+  m_Center: {x: 0.0000000011363107, y: -3.0051084e-10, z: -0.056029495}
 --- !u!4 &1122000696 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 905fa4d50caa6484491e605bd6b6cd65,
@@ -3679,8 +3679,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.020000001, y: 0.019999994, z: 0.3}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 0.020000001, y: 0.019999994, z: 0.19060196}
+  m_Center: {x: 5.454997e-10, y: 1.8618043e-10, z: -0.054698844}
 --- !u!4 &1572161949 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 905fa4d50caa6484491e605bd6b6cd65,
@@ -5024,7 +5024,7 @@ PrefabInstance:
     - target: {fileID: 7324985561636345583, guid: 3f8e7c1be81feeb4b86cc1b227f88404,
         type: 3}
       propertyPath: checkRadius
-      value: 5
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7324985561636345583, guid: 3f8e7c1be81feeb4b86cc1b227f88404,
         type: 3}
