@@ -17,7 +17,7 @@ public class PC_MOVEMENT : MonoBehaviour
     [SerializeField] LayerMask toiletLayer;
 
     int m_totalScore;
-
+    
     public bool m_hasItems;
 
     // Start is called before the first frame update
@@ -30,8 +30,12 @@ public class PC_MOVEMENT : MonoBehaviour
     void Update()
     {
         m_cc.Move(CalculateMovementDirection() * Time.deltaTime);
-        CheckForItems();
-        DumpItems();
+        if(m_heldItems.Count != 0)
+        {
+            m_hasItems = true;
+        }
+        //CheckForItems();
+        //DumpItems();
     }
 
     Vector3 CalculateMovementDirection()
