@@ -2,16 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class EN_DETECTIVE : MonoBehaviour
 {
     NavMeshAgent m_ma;
+    [SerializeField] float m_suspicion;
+    [SerializeField] float m_susIncreaseMod;
+    bool m_hitThisFrame;
 
     [SerializeField] float m_resetTime;
     [SerializeField] float m_pointCheckRadius;
     [SerializeField] float m_stopDist;
     [SerializeField] float m_timer = 0;
     bool m_walking;
+    [SerializeField]Slider m_slider;
 
     [SerializeField] float m_lookDegrees;
     [SerializeField] float m_checkRadius;
@@ -31,23 +36,60 @@ public class EN_DETECTIVE : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        if(m_suspicion >= 100)
+        {
+            //gameend
+        }
+
+        m_hitThisFrame = false;
         UpdatePoint();
         CheckForPlayer();
+        if (m_hitThisFrame)
+        {
+            UpdateSuspicion();
+        }
+        else if (m_suspicion > 0)
+        {
+            m_suspicion -= m_susIncreaseMod * Time.deltaTime;
+        }
+        else
+        {
+            m_suspicion = 0;
+        }
+        m_slider.value = m_suspicion / 100;
+        if(m_slider.value > 1) { m_slider.value = 1; }
+        if(m_slider.value == 0)
+        {
+            m_slider.fillRect.gameObject.SetActive(false);
+        }
+        else {
+            m_slider.fillRect.gameObject.SetActive(true);
+        }
     }
 
     void UpdatePoint()
     {
         m_timer += Time.deltaTime;
-        Debug.Log(m_walking);
         if (m_timer >= m_resetTime && m_ma.remainingDistance <= m_stopDist)
         {
-            m_ma.SetDestination(Random.insideUnitSphere * m_pointCheckRadius);
+            NavMeshPath p = new NavMeshPath();
+
+            if(m_ma.CalculatePath(Random.insideUnitSphere * m_pointCheckRadius, p) && p.status == NavMeshPathStatus.PathComplete)
+            {
+                m_ma.SetPath(p);
+            }
+            else
+            {
+                return;
+            }
             m_timer = 0;
             m_walking = true;
         }
         else
         {
             m_walking = false;
+
         }
     }
 
@@ -102,8 +144,13 @@ public class EN_DETECTIVE : MonoBehaviour
         {
             if (m_pc.m_hasItems)
             {
-                Debug.Log("HEY!");
+                m_hitThisFrame = true;
             }
         }
+    }
+
+    void UpdateSuspicion()
+    {
+        m_suspicion += (m_pc.m_itemsCollected * m_susIncreaseMod) * Time.deltaTime;
     }
 }

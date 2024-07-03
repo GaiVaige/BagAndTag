@@ -12,13 +12,15 @@ public class PC_MOVEMENT : MonoBehaviour
     [SerializeField] float checkRadius;
     [SerializeField] GameObject m_itemPrompt;
     [SerializeField] GameObject m_toiletPrompt;
-    List<GP_EVIDENCE> m_heldItems = new List<GP_EVIDENCE>();
+    [SerializeField] List<GP_EVIDENCE> m_heldItems = new List<GP_EVIDENCE>();
     [SerializeField] LayerMask itemLayer;
     [SerializeField] LayerMask toiletLayer;
 
     int m_totalScore;
-    
+    [HideInInspector] public int m_itemsCollected = 0;
+
     public bool m_hasItems;
+    int m_itemCount;
 
     // Start is called before the first frame update
     void Start()
@@ -30,12 +32,17 @@ public class PC_MOVEMENT : MonoBehaviour
     void Update()
     {
         m_cc.Move(CalculateMovementDirection() * Time.deltaTime);
-        if(m_heldItems.Count != 0)
+            m_itemCount = m_heldItems.Count;
+        if (m_itemCount != 0)
         {
             m_hasItems = true;
         }
-        //CheckForItems();
-        //DumpItems();
+        else
+        {
+            m_hasItems = false;
+        }
+        CheckForItems();
+        DumpItems();
     }
 
     Vector3 CalculateMovementDirection()
@@ -87,7 +94,8 @@ public class PC_MOVEMENT : MonoBehaviour
                 {
                     m_heldItems.Add(item); // Add item to m_heldItems
                     item.gameObject.SetActive(false); // Make item inactive (can't be seen, collided with or picked up again)
-                    Debug.Log("Item picked up");
+
+                    m_itemsCollected++;
                 }
             }
         }
@@ -115,7 +123,7 @@ public class PC_MOVEMENT : MonoBehaviour
                 {
                     m_heldItems.RemoveAt(0);
                 }
-                Debug.Log("Item dumped");
+
                 // Play dump sound effect/ animation
             }
         }
