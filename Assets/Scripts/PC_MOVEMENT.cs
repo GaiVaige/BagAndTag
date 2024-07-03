@@ -11,8 +11,13 @@ public class PC_MOVEMENT : MonoBehaviour
 
     [SerializeField] float checkRadius;
     [SerializeField] GameObject m_itemPrompt;
+    [SerializeField] GameObject m_toiletPrompt;
     List<GP_EVIDENCE> m_heldItems = new List<GP_EVIDENCE>();
     [SerializeField] LayerMask itemLayer;
+    [SerializeField] LayerMask toiletLayer;
+
+    int m_totalScore;
+    
     public bool m_hasItems;
 
     // Start is called before the first frame update
@@ -52,10 +57,10 @@ public class PC_MOVEMENT : MonoBehaviour
 
     void CheckForItems()
     {
-            //scan for items in capsule (pretend cylinder)
-            //add to array
-        Collider[] itemsInRange = Physics.OverlapCapsule(transform.position, transform.position, checkRadius, itemLayer, QueryTriggerInteraction.UseGlobal);
-            //if array != 0, show pickup input as a UI element
+        //scan for items in capsule (pretend cylinder)
+        //add to array
+        Collider[] itemsInRange = Physics.OverlapCapsule(transform.position, transform.position, checkRadius, itemLayer);
+        //if array != 0, show pickup input as a UI element
         if (itemsInRange.Length != 0)
         {
             m_itemPrompt.SetActive(true);
@@ -77,10 +82,11 @@ public class PC_MOVEMENT : MonoBehaviour
                 //add to the pile you carry in front of you
                 //add to a List<Evidence>
                 //Evidence has a name and score saved in a tuple
-                GP_EVIDENCE item = itemsInRange[closestItem].gameObject.GetComponent<GP_EVIDENCE>();
+                GP_EVIDENCE item = itemsInRange[closestItem].GetComponent<GP_EVIDENCE>();
                 if (item != null)
                 {
-                    m_heldItems.Add(item);
+                    m_heldItems.Add(item); // Add item to m_heldItems
+                    item.gameObject.SetActive(false); // Make item inactive (can't be seen, collided with or picked up again)
                     Debug.Log("Item picked up");
                 }
             }
@@ -94,15 +100,28 @@ public class PC_MOVEMENT : MonoBehaviour
     void DumpItems()
     {
         //If at toilet (trigger box?) & holding items, show space key (greyed if 0 items)
-
-        if (Input.GetKeyDown(KeyCode.Space) && m_heldItems.Count != 0)
+        if (Physics.CheckCapsule(transform.position, transform.position, checkRadius, toiletLayer) && m_heldItems.Count != 0)
         {
-            //every time you mash the key you dump evidence item 0
-            //at this point mark evidence as scored
-            m_heldItems[0].m_includeInScore = true;
-            m_heldItems.RemoveAt(0);
-            Debug.Log("Item dumped");
-            // Play dump sound effect/ animation
+            m_toiletPrompt.SetActive(true);
+
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                m_totalScore += m_heldItems[0].score;
+                if (m_heldItems.Count == 1)
+                {
+                    m_heldItems.Clear();
+                }
+                else if (m_heldItems.Count > 1)
+                {
+                    m_heldItems.RemoveAt(0);
+                }
+                Debug.Log("Item dumped");
+                // Play dump sound effect/ animation
+            }
+        }
+        else
+        {
+            m_toiletPrompt.SetActive(false);
         }
     }
 }
