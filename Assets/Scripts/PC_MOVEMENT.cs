@@ -53,7 +53,7 @@ public class PC_MOVEMENT : MonoBehaviour
     {
         //scan for items in capsule (pretend cylinder)
         //add to array
-        Collider[] itemsInRange = Physics.OverlapCapsule(transform.position, transform.position, checkRadius, m_itemLayer);
+        Collider[] itemsInRange = Physics.OverlapCapsule(transform.position, transform.position, checkRadius, itemLayer);
         //if array != 0, show pickup input as a UI element
         if (itemsInRange.Length != 0)
         {
@@ -94,7 +94,7 @@ public class PC_MOVEMENT : MonoBehaviour
     void DumpItems()
     {
         //If at toilet (trigger box?) & holding items, show space key (greyed if 0 items)
-        if (Physics.CheckCapsule(transform.position, transform.position, checkRadius, m_toiletLayer) && m_heldItems.Count != 0)
+        if (Physics.CheckCapsule(transform.position, transform.position, checkRadius, toiletLayer) && m_heldItems.Count != 0)
         {
             m_toiletPrompt.SetActive(true);
 
