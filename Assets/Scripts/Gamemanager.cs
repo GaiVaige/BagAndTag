@@ -12,8 +12,8 @@ public class Gamemanager : MonoBehaviour
     [HideInInspector]public static Gamemanager g_instance;
     [SerializeField] TextMeshProUGUI m_text;
     PC_MOVEMENT m_pc;
-    [SerializeField] float m_maxTime = 30;
-    float m_currentTime;
+    [SerializeField] public float m_maxTime = 30;
+    [HideInInspector] public float m_currentTime;
     public bool gameRunning = true;
 
     public List<int> m_itemIds = new List<int>();
@@ -42,6 +42,16 @@ public class Gamemanager : MonoBehaviour
     {
         if (gameRunning)
         {
+            if(m_text == null)
+            {
+                m_text = GameObject.Find("TimerText").GetComponent<TextMeshProUGUI>();
+            }
+
+            if (m_pc == null)
+            {
+                m_pc = FindObjectOfType<PC_MOVEMENT>();
+            }
+
             if (m_currentTime < 0)
             {
                 m_currentTime = 0;
