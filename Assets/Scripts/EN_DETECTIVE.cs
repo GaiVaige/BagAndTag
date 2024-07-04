@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class EN_DETECTIVE : MonoBehaviour
 {
@@ -39,7 +40,8 @@ public class EN_DETECTIVE : MonoBehaviour
 
         if(m_suspicion >= 100)
         {
-            //gameend
+            Gamemanager.g_instance.gameRunning = false;
+            SceneManager.LoadScene(3);
         }
 
         m_hitThisFrame = false;

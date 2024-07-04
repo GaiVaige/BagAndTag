@@ -219,9 +219,18 @@ MonoBehaviour:
   m_MoveSpeed: 10
   checkRadius: 0
   m_itemPrompt: {fileID: 0}
+  m_toiletPrompt: {fileID: 0}
+  m_text: {fileID: 0}
+  m_heldItems: []
   itemLayer:
     serializedVersion: 2
     m_Bits: 0
+  toiletLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  m_totalScore: 0
+  m_itemsCollected: 0
+  m_hasItems: 0
 --- !u!143 &3021897466134322310
 CharacterController:
   m_ObjectHideFlags: 0

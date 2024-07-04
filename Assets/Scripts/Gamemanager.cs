@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Gamemanager : MonoBehaviour
 {
@@ -13,7 +14,10 @@ public class Gamemanager : MonoBehaviour
     PC_MOVEMENT m_pc;
     [SerializeField] float m_maxTime;
     float m_currentTime;
-    int m_finalScore;
+    public bool gameRunning = true;
+
+    public List<int> m_itemIds = new List<int>();
+    public int m_finalScore;
 
     // Start is called before the first frame update
     void Start()
@@ -35,15 +39,24 @@ public class Gamemanager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(m_currentTime < 0)
+        if (gameRunning)
         {
-            m_currentTime = 0;
-            //end game
+            if (m_currentTime < 0)
+            {
+                m_currentTime = 0;
+                EndGame();
+            }
+            int minutes = Mathf.FloorToInt(m_currentTime / 60);
+            int seconds = Mathf.FloorToInt(m_currentTime % 60);
+            m_text.text = string.Format("{0}:{1:00}", minutes, seconds);
+            m_currentTime -= Time.deltaTime;
+            m_finalScore = m_pc.m_totalScore;
         }
-        int minutes = Mathf.FloorToInt(m_currentTime / 60);
-        int seconds = Mathf.FloorToInt(m_currentTime % 60);
-        m_text.text = string.Format("{0}:{1:00}", minutes, seconds);
-        m_currentTime -= Time.deltaTime;
-        m_finalScore = m_pc.m_totalScore;
+    }
+
+    void EndGame()
+    {
+        gameRunning = false;
+        SceneManager.LoadScene(2);
     }
 }

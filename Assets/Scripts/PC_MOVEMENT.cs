@@ -139,8 +139,9 @@ public class PC_MOVEMENT : MonoBehaviour
 
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
-
                     m_totalScore += m_heldItems[0].score;
+                    Gamemanager.g_instance.m_itemIds.Add(m_heldItems[0].m_evidenceID);
+
                     if (m_heldItems.Count == 1)
                     {
                         m_heldItems.Clear();
