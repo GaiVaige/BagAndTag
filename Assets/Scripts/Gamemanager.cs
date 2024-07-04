@@ -35,6 +35,7 @@ public class Gamemanager : MonoBehaviour
             DontDestroyOnLoad(this);
         }
         m_pc = FindObjectOfType<PC_MOVEMENT>();
+        m_text = FindObjectOfType<TextMeshProUGUI>();
     }
 
     // Update is called once per frame

@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Game Over.unity
     guid: cafdd775f56e04af4a6a92bf2de3e296
+  - enabled: 1
+    path: Assets/Scenes/Intro cutscene.unity
+    guid: 7539af1c208d04322a5ba584466bf076
   m_configObjects: {}
