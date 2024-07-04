@@ -1022,6 +1022,8 @@ MonoBehaviour:
   m_evidence3: {fileID: 696387111}
   m_evidence4: {fileID: 493516865}
   m_evidence5: {fileID: 2069747787}
+  m_evidence6: {fileID: 1732825225}
+  m_evidence7: {fileID: 857114885}
   m_scoreText: {fileID: 939236064}
   m_textDelay: 0.01
 --- !u!114 &571367187

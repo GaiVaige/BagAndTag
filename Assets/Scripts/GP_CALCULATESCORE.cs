@@ -11,6 +11,8 @@ public class GP_CALCULATESCORE : MonoBehaviour
     [SerializeField] Image m_evidence3;
     [SerializeField] Image m_evidence4;
     [SerializeField] Image m_evidence5;
+    [SerializeField] Image m_evidence6;
+    [SerializeField] Image m_evidence7;
 
     [SerializeField] TextMeshProUGUI m_scoreText;
     [SerializeField] float m_textDelay;
@@ -40,6 +42,14 @@ public class GP_CALCULATESCORE : MonoBehaviour
             if (Gamemanager.g_instance.m_itemIds.Contains(5))
             {
                 m_evidence5.color = Color.white;
+            }
+            if (Gamemanager.g_instance.m_itemIds.Contains(6))
+            {
+                m_evidence6.color = Color.white;
+            }
+            if (Gamemanager.g_instance.m_itemIds.Contains(7))
+            {
+                m_evidence7.color = Color.white;
             }
         }
     }
