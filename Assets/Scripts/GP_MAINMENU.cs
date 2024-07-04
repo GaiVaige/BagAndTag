@@ -11,7 +11,7 @@ public class GP_MAINMENU : MonoBehaviour
         {
             Gamemanager.g_instance.gameRunning = true;
         }
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene("SampleScene");
     }
 
     public void OnQuitPressed()

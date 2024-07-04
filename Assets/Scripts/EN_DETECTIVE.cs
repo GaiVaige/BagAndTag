@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class EN_DETECTIVE : MonoBehaviour
 {
@@ -27,8 +28,12 @@ public class EN_DETECTIVE : MonoBehaviour
     PC_MOVEMENT m_pc;
     [SerializeField] bool m_drawVisibilityGizmos;
 
+
+    [SerializeField] TextMeshPro m_tm;
+    bool m_doNotUpdateText;
     void Start()
     {
+        m_tm.text = "";
         m_ma = GetComponent<NavMeshAgent>();
         m_ma.SetDestination(Random.insideUnitSphere * m_pointCheckRadius);
         m_pc = FindObjectOfType<PC_MOVEMENT>();
@@ -37,7 +42,7 @@ public class EN_DETECTIVE : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        m_tm.gameObject.transform.SetPositionAndRotation(m_tm.transform.position, Quaternion.identity);
         if(m_suspicion >= 100)
         {
             Gamemanager.g_instance.gameRunning = false;
@@ -147,6 +152,12 @@ public class EN_DETECTIVE : MonoBehaviour
             if (m_pc.m_hasItems)
             {
                 m_hitThisFrame = true;
+                if (!m_doNotUpdateText)
+                {
+                    m_tm.text = "Hey! What have you got there!";
+                m_doNotUpdateText = true;
+                }
+
             }
         }
     }
@@ -154,5 +165,12 @@ public class EN_DETECTIVE : MonoBehaviour
     void UpdateSuspicion()
     {
         m_suspicion += (m_pc.m_itemsCollected * m_susIncreaseMod) * Time.deltaTime;
+    }
+
+    IEnumerator TextTimer()
+    {
+        yield return new WaitForSeconds(3.0f);
+        m_tm.text = "";
+        m_doNotUpdateText = false;
     }
 }

@@ -11,11 +11,11 @@ public class GP_ENDSCREEN : MonoBehaviour
         {
             Gamemanager.g_instance.gameRunning = true;
         }
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene("SampleScene");
     }
 
     public void OnMenuPressed()
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene("SampleScene");
     }
 }

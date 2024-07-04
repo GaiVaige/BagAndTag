@@ -15,8 +15,11 @@ public class PC_MOVEMENT : MonoBehaviour
     [SerializeField] GameObject m_toiletPrompt;
     [SerializeField] TextMeshPro m_text;
     [SerializeField] List<GP_EVIDENCE> m_heldItems = new List<GP_EVIDENCE>();
+    [SerializeField] AudioSource m_as;
     [SerializeField] LayerMask itemLayer;
+    [SerializeField] AudioClip m_itemSound;
     [SerializeField] LayerMask toiletLayer;
+    [SerializeField] AudioClip m_toiletSound;
 
     [HideInInspector] public int m_totalScore;
     [HideInInspector] public int m_itemsCollected = 0;
@@ -27,6 +30,7 @@ public class PC_MOVEMENT : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        m_as = GetComponent<AudioSource>();
         m_cc = GetComponent<CharacterController>();
         m_text.gameObject.SetActive(false);
     }
@@ -84,6 +88,7 @@ public class PC_MOVEMENT : MonoBehaviour
                     closestItem = i;
                 }
             }
+            Debug.DrawLine(transform.position, itemsInRange[closestItem].transform.position);
             if(Physics.Linecast(transform.position, itemsInRange[closestItem].transform.position, LayerMask.GetMask("Default")))
             {
                 m_itemPrompt.SetActive(false);
@@ -109,7 +114,8 @@ public class PC_MOVEMENT : MonoBehaviour
                         item.gameObject.SetActive(false); // Make item inactive (can't be seen, collided with or picked up again)
 
                         m_itemsCollected++;
-
+                        m_as.clip = m_itemSound;
+                        m_as.Play();
                         m_text.gameObject.SetActive(true);
                         m_text.text = item.m_text;
                         StartCoroutine(TextTimer());
@@ -141,7 +147,8 @@ public class PC_MOVEMENT : MonoBehaviour
                 {
                     m_totalScore += m_heldItems[0].score;
                     Gamemanager.g_instance.m_itemIds.Add(m_heldItems[0].m_evidenceID);
-
+                    m_as.clip = m_toiletSound;
+                    m_as.Play();
                     if (m_heldItems.Count == 1)
                     {
                         m_heldItems.Clear();
