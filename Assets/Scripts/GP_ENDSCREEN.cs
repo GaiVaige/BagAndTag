@@ -16,6 +16,6 @@ public class GP_ENDSCREEN : MonoBehaviour
 
     public void OnMenuPressed()
     {
-        SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene("Main Menu");
     }
 }
